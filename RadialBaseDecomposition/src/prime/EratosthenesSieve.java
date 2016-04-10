@@ -19,10 +19,14 @@ public class EratosthenesSieve implements PrimeGenerator {
 		boolean[] prime = new boolean[n + 1];
 		Arrays.fill(prime, true);
 		prime[0] = prime[1] = false;
-		for (int i = 2; i * i <= n; i++) {
+		// use the equation
+		// (x+1)^2=x^2+(2(x+1)-1)
+		// to speed up squares calculation
+		int i2 = 1;
+		for (int i = 2; (i2 += 2 * i - 1) <= n; i++) {
 			if (prime[i]) {
-				for (int j = i; i * j <= n; j++) {
-					prime[i * j] = false;
+				for (int j = i2; j <= n; j += i) {
+					prime[j] = false;
 				}
 			}
 		}
